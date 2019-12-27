@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Security Catalog</title>
+</head>
+<body>
+    {% if domain_list %}
+        <ul>
+        {% for Domain in domain_list %}
+            <li>{{ Domain.name }}</li>
+                <ul>
+                {% for Technology in technology_list %}
+                    {% if Technology.domain == Domain %}
+                    <li>{{ Technology.name }} </li>
+                        <ul>
+                    {% for Product in product_list %}
+                        {% if Product.technology == Technology %}
+                            <li>{{ Product.name }} </li>
+                        {% endif %}
+                    {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+        {% endfor %}
+        </ul>
+    {% else %}
+        No domain to show.
+    {% endif %}
+</body>
+</html>
