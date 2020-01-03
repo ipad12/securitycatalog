@@ -1,31 +1,116 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Security Catalog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Security Catalog</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        .sidebar {
+            height: 100%;
+            position: fixed;
+            opacity: 100%;
+        }
+
+        .dropright {
+            height: 25px;
+        }
+
+    </style>
+
 </head>
+
 <body>
-    {% if domain_list %}
-        <ul>
-        {% for Domain in domain_list %}
-            <li>{{ Domain.name }}</li>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <div class="col-sm-9 md-9 lg-9">
+            <a class="navbar-brand" href="#">Navbar</a>
+        </div>
+        <div class="col-sm-3 md-3 lg-3">
+            <form>
+                <input type="text" placeholder="Search" aria-label="Search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm-4 md-4 lg-4">
+            <nav class="col-md-auto bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    {% if domain_list %}
+                    <br />
+                    <br />
+                    <ul class="nav flex-column">
+                        {% for Domain in domain_list %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+
+                        <li class="nav-item dropright">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Domain.name }}</a>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="dropdown01">
+                                {% for Technology in technology_list %}
+                                {% if Technology.domain == Domain %}
+                                <a class="dropdown-item text-white" href="#">{{ Technology.name }}</a>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </li>
+                        </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+        <div class="col-sm-8 md-8 lg-8">
+            {% if domain_list %}
+            <br />
+            <br />
+            <br />
+            <ul>
+                {% for Domain in domain_list %}
+                <li>{{ Domain.name }}</li>
                 <ul>
-                {% for Technology in technology_list %}
+                    {% for Technology in technology_list %}
                     {% if Technology.domain == Domain %}
                     <li>{{ Technology.name }} </li>
-                        <ul>
-                    {% for Product in product_list %}
+                    <ul>
+                        {% for Product in product_list %}
                         {% if Product.technology == Technology %}
-                            <li>{{ Product.name }} </li>
+                        <li>{{ Product.name }} </li>
                         {% endif %}
-                    {% endfor %}
-                        </ul>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
-                {% endfor %}
+                    {% endfor %}
                 </ul>
-        {% endfor %}
-        </ul>
-    {% else %}
-        No domain to show.
-    {% endif %}
+                {% endfor %}
+            </ul>
+            {% else %}
+            No domain to show.
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Popper.JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
 </body>
+
 </html>
